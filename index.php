@@ -7,26 +7,45 @@
  */
 
 try {
-    //$mydb = new PDO("mysql:host=netology.ru;dbname=global;charset=UTF8","root","");
+    //$mydb = new PDO("mysql:host=university.netology.ru;dbname=global;charset=UTF8","mboldyrev","neto0801");
     $mydb = new PDO("mysql:host=127.0.0.1:8889;dbname=global;charset=UTF8","root","root");
 } catch (PDOException $e) {
     echo 'Подключение не удалось: ' . $e->getMessage();
 }
 
 echo "<h2>Домашнее задание к лекции 4.1 «Реляционные базы данных и SQL»</h2>";
+$dbtabl = 'books';
+$sql = "SELECT id, name, author, year, isbn, genre FROM books";
 
-if(!empty($_GET)){
-    //$sql = "SELECT * FROM books WHERE author = :author";
+$gotisbn = (!empty($_GET["isbn"])) ?  $_GET["isbn"] : "";
+$gotname = (!empty($_GET["name"])) ?  $_GET["name"] : "";
+$gotauthor = (!empty($_GET["author"])) ?  $_GET["author"] : "";
+
+$clause1 = (strlen($gotisbn)) ? "isbn LIKE \"%" . $gotisbn."%\"" : "";
+$clause2 = (strlen($gotname)) ? "name LIKE \"%" . $gotname."%\"" : "";
+$clause3 = (strlen($gotauthor)) ? "author LIKE \"%" . $gotauthor."%\"" : "";
+
+//echo "1: ".$clause1. "<br />2: ".$clause2. "<br />3: ".$clause3. "<br />";
+
+$two1and2 = (strlen($clause1)*strlen($clause2)) ? ($clause1." AND ".$clause2) : ($clause1.$clause2) ;
+
+//echo "1 и 2: ".$two1and2. "<br />";
+$allthree = (strlen($two1and2)*strlen($clause3)) ? ($two1and2." AND ".$clause3) : ($two1and2.$clause3) ;
+
+//echo "all: ".$allthree. "<br />";
+
+if ( strlen($clause1.$clause2.$clause3)) {
+    $sql .= " WHERE ".$allthree;
 }
 
-$sql = "SELECT * FROM books";
-echo "Запрос: \"".$sql."\"<br />";
+
+//echo "Запрос: \"".$sql."\"<br />";
 
 $html = <<< FormSearch
 <form method="GET">
-    <input type="text" name="isbn" placeholder="ISBN" value="" />
-    <input type="text" name="name" placeholder="Название книги" value="" />
-    <input type="text" name="author" placeholder="Автор книги" value="" />
+    <input type="text" name="isbn" placeholder="ISBN" value="$gotisbn" />
+    <input type="text" name="name" placeholder="Название книги" value="$gotname" />
+    <input type="text" name="author" placeholder="Автор книги" value="$gotauthor" />
     <input type="submit" value="Поиск" />
 </form>
 FormSearch;
