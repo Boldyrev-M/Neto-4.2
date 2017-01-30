@@ -7,8 +7,8 @@
  */
 
 try {
-    //$mydb = new PDO("mysql:host=university.netology.ru;dbname=global;charset=UTF8","username","password");
-    $mydb = new PDO("mysql:host=127.0.0.1:8889;dbname=global;charset=UTF8","root","root");
+    $mydb = new PDO("mysql:host=localhost;dbname=global;charset=UTF8","mboldyrev","neto0801");
+    //$mydb = new PDO("mysql:host=127.0.0.1:8889;dbname=global;charset=UTF8","root","root");
 } catch (PDOException $e) {
     echo 'Подключение не удалось: ' . $e->getMessage();
 }
@@ -53,7 +53,7 @@ echo $html;
 
 //  `books` (`id`, `name`, `author`, `year`, `isbn`, `genre`)
 $tabhead = <<< TABH
-<table border=1>
+<table border=1 bgcolor = #c0c0c0>
     <tr>
         <th>ID</th>
         <th>Название</th>
