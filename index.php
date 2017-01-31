@@ -21,9 +21,6 @@ echo "<h2>Домашнее задание к лекции 4.1 «Реляцион
 $dbtabl = 'books';
 $sql = "SELECT id, name, author, year, isbn, genre FROM books";
 
-$search = substr($search, 0, 64);
-$search = preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", $search);
-
 $gotisbn = (!empty($_GET["isbn"])) ? clearing($_GET["isbn"]) : "";
 $gotname = (!empty($_GET["name"])) ?  clearing($_GET["name"]) : "";
 $gotauthor = (!empty($_GET["author"])) ?  clearing($_GET["author"]) : "";
