@@ -8,14 +8,22 @@
 
 function clearing ($strclr) {
     //return (string) preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,30));
-
-    if (preg_match("/([^ a-zA-Z0-9а-яА-ЯёЁ\-\—\(\)]*)",substr($strclr,0,30),$matches) !== false) {
-    return (string) $matches[1];
+    $trimmed = substr($strclr, 0, 30);
+    $matched = preg_match("/(.*)[^ a-zA-Z0-9а-яА-ЯёЁ]*/", $trimmed, $matches);
+    if ($matched === false) {
+        return ""; //prgmatcherror
     }
     else {
-        return "";
+        if ($matched == 1) {
+            return (string)$matches[1];
+        }
+        else {
+            return $trimmed;
+        }
+
     }
 }
+
 
 try {
     $mydb = new PDO("mysql:host=localhost;dbname=global;charset=UTF8","mboldyrev","neto0801");
