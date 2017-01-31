@@ -7,7 +7,14 @@
  */
 
 function clearing ($strclr) {
-    return preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,64));
+    //return (string) preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,30));
+
+    if (preg_match("/([^ a-zA-Z0-9а-яА-ЯёЁ\-\—\(\)]*)",substr($strclr,0,30),$matches) !== false) {
+    return (string) $matches[1];
+    }
+    else {
+        return "";
+    }
 }
 
 try {
