@@ -7,21 +7,8 @@
  */
 
 function clearing ($strclr) {
-    //return (string) preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,30));
-    $trimmed = substr($strclr, 0, 30);
-    $matched = preg_match("/(.*)[^ a-zA-Z0-9а-яА-ЯёЁ]*/", $trimmed, $matches);
-    if ($matched === false) {
-        return ""; //prgmatcherror
-    }
-    else {
-        if ($matched == 1) {
-            return (string)$matches[1];
-        }
-        else {
-            return $trimmed;
-        }
+    return (string) preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,30));
 
-    }
 }
 
 
