@@ -7,7 +7,7 @@
  */
 
 function clearing ($strclr) {
-    return (string) preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,30));
+    return (string) preg_replace("/[^\wа-я А-ЯёЁ\x7F-\xFF\s]/", "", substr($strclr,0,30));
 
 }
 
