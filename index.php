@@ -6,6 +6,10 @@
  * Time: 20:21
  */
 
+function clearing ($strclr) {
+    return preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", substr($strclr,0,64));
+}
+
 try {
     $mydb = new PDO("mysql:host=localhost;dbname=global;charset=UTF8","mboldyrev","neto0801");
     //$mydb = new PDO("mysql:host=127.0.0.1:8889;dbname=global;charset=UTF8","root","root");
@@ -17,9 +21,12 @@ echo "<h2>Домашнее задание к лекции 4.1 «Реляцион
 $dbtabl = 'books';
 $sql = "SELECT id, name, author, year, isbn, genre FROM books";
 
-$gotisbn = (!empty($_GET["isbn"])) ?  $_GET["isbn"] : "";
-$gotname = (!empty($_GET["name"])) ?  $_GET["name"] : "";
-$gotauthor = (!empty($_GET["author"])) ?  $_GET["author"] : "";
+$search = substr($search, 0, 64);
+$search = preg_replace("/[^\wа-яА-ЯёЁ\x7F-\xFF\s]/", " ", $search);
+
+$gotisbn = (!empty($_GET["isbn"])) ? clearing($_GET["isbn"]) : "";
+$gotname = (!empty($_GET["name"])) ?  clearing($_GET["name"]) : "";
+$gotauthor = (!empty($_GET["author"])) ?  clearing($_GET["author"]) : "";
 
 $clause1 = (strlen($gotisbn)) ? "isbn LIKE \"%" . $gotisbn."%\"" : "";
 $clause2 = (strlen($gotname)) ? "name LIKE \"%" . $gotname."%\"" : "";
@@ -53,8 +60,8 @@ echo $html;
 
 //  `books` (`id`, `name`, `author`, `year`, `isbn`, `genre`)
 $tabhead = <<< TABH
-<table border=1 bgcolor = #c0c0c0>
-    <tr>
+<table border=1 bgcolor = #eeeeee>
+    <tr bgcolor = #c0c0c0>
         <th>ID</th>
         <th>Название</th>
         <th>Автор</th>
